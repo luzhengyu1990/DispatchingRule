@@ -154,7 +154,7 @@ public class HNNewRuleDemo extends BaseCEPRule {
 				if (new MVELCondition("numberOfUnitsInLoadCenter< 23").evaluate(facts)) {
 					System.out.println("numberOfUnitsInLoadCenter< 23");
 				}
-				if (new MVELCondition("numberOfUnitsInLoadCenter< 23").evaluate(facts)) {
+				if (new MVELCondition("minSpinningReserveOfUnitsInLoadCentere<0.3").evaluate(facts)) {
 					System.out.println("minSpinningReserveOfUnitsInLoadCentere<0.3");
 				}
 				if (new MVELCondition("spinningReserveOfUnits220OrAbove< 340").evaluate(facts)) {
