@@ -1,0 +1,15 @@
+/aclineend.txt
+/aclinesegment.txt
+/basevoltage.txt
+/breaker.txt
+/busbarsection.txt
+/compensator_p.txt
+/compensator_s.txt
+/disconnector.txt
+/energyconsumer.txt
+/generatingunit.txt
+/powertransformer.txt
+/rectifierinverter.txt
+/substation.txt
+/taptype.txt
+/transformerwinding.txt
