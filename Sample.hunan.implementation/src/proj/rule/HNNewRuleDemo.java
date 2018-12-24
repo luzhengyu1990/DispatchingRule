@@ -27,7 +27,9 @@ public class HNNewRuleDemo extends BaseCEPRule {
 	@Override
 	public void execute(Facts facts) throws Exception {
 		facts.asMap().forEach((k, v) -> {
-			System.out.println(k +"  :"+ v);
+			if (!k.equals(BaseCEPRule.RFact_Event)) {
+				System.out.println(String.format("%-50s", k) + v);
+			}
 		});
 		if (new MVELCondition("load > 2200 && load < 2500").evaluate(facts)) {
 			if (new MVELCondition("powerOfQishao < 80").evaluate(facts)) {
