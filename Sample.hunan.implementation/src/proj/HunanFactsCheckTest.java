@@ -17,6 +17,7 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.interpss.common.exp.InterpssException;
 import com.interpss.common.util.IpssLogger;
+import com.interpss.core.aclf.AclfBranch;
 import com.interpss.core.aclf.AclfGen;
 import com.interpss.core.aclf.AclfLoad;
 import com.interpss.core.aclf.AclfNetwork;
@@ -53,6 +54,7 @@ public class HunanFactsCheckTest{
 		List<AclfGen> genList3 = new ArrayList<AclfGen>();
 		List<AclfGen> genList4 = new ArrayList<AclfGen>();
 		List<AclfGen> genList5 = new ArrayList<AclfGen>();
+		
 		List<AclfLoad> loadList = new ArrayList<AclfLoad>();
 		List<AclfLoad> loadList2 = new ArrayList<AclfLoad>();
 		alcfNet.getBusList().forEach(bus -> {
@@ -98,13 +100,23 @@ public class HunanFactsCheckTest{
 //						.collect(Collectors.toList()));
 //			}
 		});
-		
+		List<AclfBranch> branchList1 = alcfNet.getBranchList().stream()
+				.filter(branch -> branch.getName().contains("½­åî")).collect(Collectors.toList());
+		List<AclfBranch> branchList2 = alcfNet.getBranchList().stream()
+				.filter(branch -> branch.getName().contains("åîå¢")).collect(Collectors.toList());
+		List<AclfBranch> branchList3 = alcfNet.getBranchList().stream()
+				.filter(branch -> branch.getName().contains("å¢¸´")).collect(Collectors.toList());
+		List<AclfBranch> branchList4 = alcfNet.getBranchList().stream()
+				.filter(branch -> branch.getName().contains("¸ð¸Ú")).collect(Collectors.toList());
 		System.out.println(genList1.size());
 		System.out.println(genList2.size());
 		System.out.println(genList3.size());
 		System.out.println(genList4.size());
 		System.out.println(loadList.size());
-		
+		System.out.println(branchList1.size());
+		System.out.println(branchList2.size());
+		System.out.println(branchList3.size());
+		System.out.println(branchList4.size());
 		HazelcastInstance client = HazelcastClient.newHazelcastClient(new ClientConfig());
 		client.getMap("Facts").put("unitsInProvince", genList2);
 		client.getMap("Facts").put("unitsInCentral", genList3);
@@ -112,6 +124,10 @@ public class HunanFactsCheckTest{
 		client.getMap("Facts").put("units220OrAbove", genList4);
 		client.getMap("Facts").put("loads", loadList2);
 		client.getMap("Facts").put("qishaoLoads", loadList);
+		client.getMap("Facts").put("jiangcanBranchList1", branchList1);
+		client.getMap("Facts").put("canliBranchList1", branchList2);
+		client.getMap("Facts").put("lifuBranchList1", branchList3);
+		client.getMap("Facts").put("gegangBranchList1", branchList4);
 	}
 
 	Predicate<AclfGen> acticvComsumer = gen -> gen.getGen().getReal() > 0.1;
