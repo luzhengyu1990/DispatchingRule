@@ -124,10 +124,10 @@ public class HunanFactsCheckTest{
 		client.getMap("Facts").put("units220OrAbove", genList4);
 		client.getMap("Facts").put("loads", loadList2);
 		client.getMap("Facts").put("qishaoLoads", loadList);
-		client.getMap("Facts").put("jiangcanBranchList1", branchList1);
-		client.getMap("Facts").put("canliBranchList1", branchList2);
-		client.getMap("Facts").put("lifuBranchList1", branchList3);
-		client.getMap("Facts").put("gegangBranchList1", branchList4);
+		client.getMap("Facts").put("jiangcanBranchList", branchList1);
+		client.getMap("Facts").put("canliBranchList", branchList2);
+		client.getMap("Facts").put("lifuBranchList", branchList3);
+		client.getMap("Facts").put("gegangBranchList", branchList4);
 	}
 
 	Predicate<AclfGen> acticvComsumer = gen -> gen.getGen().getReal() > 0.1;
