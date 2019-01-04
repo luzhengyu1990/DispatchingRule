@@ -1,0 +1,17 @@
+if (level-1) {
+
+  if (level-2) {
+
+    if (level-3) {
+       rule1  (non-unique)
+       rule2
+       ...
+    }
+    else ... {
+    }
+
+  }
+  else ... {
+    ...
+  }
+}
