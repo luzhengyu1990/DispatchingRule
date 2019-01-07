@@ -1,6 +1,7 @@
 package proj.rule;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jeasy.rules.api.Facts;
 
@@ -49,11 +50,11 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 		List<AclfGen> gegangBranchList = facts.get("gegangBranchList");
 		double loadP = loads.stream().mapToDouble(load -> load.getLoadCP().getReal()).sum() * 10;
 		double powerOfQishao = qishaoLoads.stream().mapToDouble(load -> -load.getLoadCP().getReal()).sum() * 10;
-
 		double minSpinningReserveOfUnitsInLoadCentere = unitsInLoadCenter.stream()
 				.mapToDouble(
 						gen -> (gen.getPGenLimit().getMax() - gen.getGen().getReal()) / gen.getPGenLimit().getMax())
 				.min().getAsDouble();
+		
 		double spinningReserveOfUnits220OrAbove = units220OrAbove.stream()
 				.mapToDouble(gen -> gen.getPGenLimit().getMax() - gen.getGen().getReal()).filter(d -> d < 10).sum()
 				* 10;
@@ -353,12 +354,20 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 		}
 		System.out.println("负荷水平：" + loadP);
 		System.out.println("祁韶直流： " + powerOfQishao);
-
+		List<AclfGen> overLimitList = unitsInLoadCenter.stream().filter(gen -> ((gen.getPGenLimit().getMax() - gen.getGen().getReal())
+				/ gen.getPGenLimit().getMax()) < this.minSpinningReserveOfUnitsInLoadCentereLimit
+		).collect(Collectors.toList());
 		limitAction(unitsInProvince.size(), this.unitsInProvinceSizeLimit, "省内发电机组数");
 		limitAction(unitsInCentral.size(), this.unitsInCentralSizeLimit, "湘中发电机组数");
 		limitAction(unitsInLoadCenter.size(), this.unitsInLoadCenterSizeLimit, "负荷中心发电机组数");
 		limitAction(minSpinningReserveOfUnitsInLoadCentere, this.minSpinningReserveOfUnitsInLoadCentereLimit, "负荷中心机组最小旋转备用百分比");
+		overLimitList.forEach(gen -> {
+			System.err.println(gen.getName()
+					+ (gen.getPGenLimit().getMax() - gen.getGen().getReal()) / gen.getPGenLimit().getMax());
+		});
 		limitAction(spinningReserveOfUnits220OrAbove, this.spinningReserveOfUnits220OrAboveLimit, "220以上机组旋转备用");
+		
+		
 	}
 	
 	private void setLimit(int unitsInProvinceSizeLimit, int unitsInCentralSizeLimit, int unitsInLoadCenterSizeLimit,
