@@ -2,6 +2,7 @@ package proj;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import com.interpss.common.exp.InterpssException;
 import com.interpss.common.util.IpssLogger;
 import com.interpss.core.aclf.AclfBranch;
@@ -23,19 +25,29 @@ import com.interpss.core.aclf.AclfLoad;
 import com.interpss.core.aclf.AclfNetwork;
 
 import cn.sgepri.adapter.lmodel.BaseAclfNetworkModelHelper;
+import cn.sgepri.adapter.lmodel.rdbase.PModel2LModeltHelper;
 import cn.sgepri.adapter.lmodel.rdbase.PModel2SENetAdapter;
 import cn.sgepri.adapter.pmodel.rdbase.PModelFileAdapter;
 import cn.sgepri.model.common.RTModelException;
 import cn.sgepri.model.physical.PModelContainer;
+import cn.sgepri.model.physical.impl.PModelContainerHelper;
 
 public class HunanFactsCheckTest{
 
 	@Test
 	public void test() throws IOException, RTModelException, InterpssException {
+		HashSet<String> nameSet = new HashSet<String>();
 		PModelFileAdapter adapter = new PModelFileAdapter();
 		adapter.readData2PModel("testdata/dist/scada/");
 		PModelContainer container = adapter.getContainer();
-		
+		PModelContainerHelper helper = new PModelContainerHelper(adapter.getContainer());
+		helper.visitSubstation(sub -> {
+			if (sub.getBaseVoltage(sub.getDataRec().getBv_id()) != null) {
+				if (sub.getBaseVoltage(sub.getDataRec().getBv_id()).getDataRec().getNomvol() > 200) {
+					nameSet.add(sub.getObjName());
+				}
+			}
+		});
 		// 拓扑分析
 		PerformanceTimer timer = new PerformanceTimer(IpssLogger.getLogger());
 		timer.start();
@@ -91,14 +103,15 @@ public class HunanFactsCheckTest{
 				}
 			});
 			
+			if (nameSet.contains(PModel2LModeltHelper.getSubName(bus.getId()))) {
+				genList4.addAll(bus.getContributeGenList().stream().filter(gen -> gen.getName().contains("#"))
+						.filter(acticvComsumer).collect(Collectors.toList()));
+			}
 			
-			genList4.addAll(bus.getContributeGenList().stream().filter(gen -> gen.getName().contains("#"))
-					.filter(acticvComsumer).collect(Collectors.toList()));
-			
-//			if(bus.getName().contains("韶山")) {
-//				genList5.addAll(bus.getContributeGenList().stream()
-//						.collect(Collectors.toList()));
-//			}
+			if(bus.getName().contains("韶山")) {
+				genList5.addAll(bus.getContributeGenList().stream()
+						.collect(Collectors.toList()));
+			}
 		});
 		List<AclfBranch> branchList1 = alcfNet.getBranchList().stream()
 				.filter(branch -> branch.getName().contains("江孱")).collect(Collectors.toList());
@@ -112,6 +125,7 @@ public class HunanFactsCheckTest{
 		System.out.println(genList2.size());
 		System.out.println(genList3.size());
 		System.out.println(genList4.size());
+		System.out.println(genList5.size());
 		System.out.println(loadList.size());
 		System.out.println(branchList1.size());
 		System.out.println(branchList2.size());
@@ -128,6 +142,35 @@ public class HunanFactsCheckTest{
 		client.getMap("Facts").put("canliBranchList", branchList2);
 		client.getMap("Facts").put("lifuBranchList", branchList3);
 		client.getMap("Facts").put("gegangBranchList", branchList4);
+		IMap<Object, Object> facts = client.getMap("Facts");
+		List<AclfLoad> loads = (List<AclfLoad>) facts.get("loads");
+		List<AclfLoad> qishaoLoads = (List<AclfLoad>) facts.get("qishaoLoads");
+		List<AclfGen> unitsInLoadCenter = (List<AclfGen>) facts.get("unitsInLoadCenter");
+		List<AclfGen> units220OrAbove = (List<AclfGen>) facts.get("units220OrAbove");
+		List<AclfGen> unitsInProvince = (List<AclfGen>) facts.get("unitsInProvince");
+		List<AclfGen> unitsInCentral = (List<AclfGen>) facts.get("unitsInCentral");
+		List<AclfGen> jiangcanBranchList = (List<AclfGen>) facts.get("jiangcanBranchList");
+		List<AclfGen> canliBranchList = (List<AclfGen>) facts.get("canliBranchList");
+		List<AclfGen> lifuBranchList = (List<AclfGen>) facts.get("lifuBranchList");
+		List<AclfGen> gegangBranchList = (List<AclfGen>) facts.get("gegangBranchList");
+		double loadP = loads.stream().mapToDouble(load -> load.getLoadCP().getReal()).sum()*10;
+		double powerOfQishao = qishaoLoads.stream().mapToDouble(load -> -load.getLoadCP().getReal()).sum()*10;
+		
+		double minSpinningReserveOfUnitsInLoadCentere = unitsInLoadCenter.stream()
+				.mapToDouble(
+						gen -> (gen.getPGenLimit().getMax() - gen.getGen().getReal()) / gen.getPGenLimit().getMax())
+				.min().getAsDouble();
+		double spinningReserveOfUnits220OrAbove = units220OrAbove.stream()
+				.mapToDouble(gen -> gen.getPGenLimit().getMax() - gen.getGen().getReal()).filter(d -> d < 10).sum()
+				* 10;
+//		units220OrAbove.forEach(gen->{
+//			if((gen.getPGenLimit().getMax() - gen.getGen().getReal())<10)
+//			System.out.println(gen.getName()+(gen.getPGenLimit().getMax() - gen.getGen().getReal()));
+//		});
+		System.out.println(loadP);
+		System.out.println(powerOfQishao);
+		System.out.println(minSpinningReserveOfUnitsInLoadCentere);
+		System.out.println(spinningReserveOfUnits220OrAbove);
 	}
 
 	Predicate<AclfGen> acticvComsumer = gen -> gen.getGen().getReal() > 0.1;
