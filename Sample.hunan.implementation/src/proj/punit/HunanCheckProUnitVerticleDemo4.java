@@ -31,9 +31,6 @@ public class HunanCheckProUnitVerticleDemo4 extends CacheEventProcessingUnit {
 	@Override
 	public void start() {
 		super.start();
-		this.vertx.setPeriodic(20000L, event ->  {
-			this.logEvent(new TimerEvent());
-		});
 	}
 
 	@Override public String[] getInQueueNames() {

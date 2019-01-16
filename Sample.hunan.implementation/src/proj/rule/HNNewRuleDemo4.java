@@ -1,5 +1,7 @@
 package proj.rule;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,29 +40,23 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 
 	@Override
 	public void execute(Facts facts) throws Exception {
-		List<AclfLoad> loads = facts.get("loads");
-		List<AclfLoad> qishaoLoads = facts.get("qishaoLoads");
-		List<AclfGen> unitsInLoadCenter = facts.get("unitsInLoadCenter");
-		List<AclfGen> units220OrAbove = facts.get("units220OrAbove");
-		List<AclfGen> unitsInProvince = facts.get("unitsInProvince");
-		List<AclfGen> unitsInCentral = facts.get("unitsInCentral");
-		List<AclfGen> jiangcanBranchList = facts.get("jiangcanBranchList");
-		List<AclfGen> canliBranchList = facts.get("canliBranchList");
-		List<AclfGen> lifuBranchList = facts.get("lifuBranchList");
-		List<AclfGen> gegangBranchList = facts.get("gegangBranchList");
-		double loadP = loads.stream().mapToDouble(load -> load.getLoadCP().getReal()).sum() * 10;
-		double powerOfQishao = qishaoLoads.stream().mapToDouble(load -> -load.getLoadCP().getReal()).sum() * 10;
-		double minSpinningReserveOfUnitsInLoadCentere = unitsInLoadCenter.stream()
-				.mapToDouble(
-						gen -> (gen.getPGenLimit().getMax() - gen.getGen().getReal()) / gen.getPGenLimit().getMax())
-				.min().getAsDouble();
+		double loadP = facts.get("load");
+		double powerOfQishao = facts.get("qishao");
+		int unitsInProvinceSize = facts.get("unitsInProvinceSize");
+		int unitsInCentralSize = facts.get("unitsInCentralSize");
+		int unitsInLoadCenterSize = facts.get("unitsInLoadCenterSize");
+		double spinningReserveOfUnits220OrAbove = facts.get("spinningReserveOfUnits220OrAbove");
+		double minSpinningReserveOfUnitsInLoadCentere = facts.get("minSpinningReserveOfUnitsInLoadCentere");
+		int jiangcanBranchSize = facts.get("jiangcanBranchSize");
+		int canliBranchSize = facts.get("canliBranchSize");
+		int lifuBranchSize = facts.get("lifuBranchSize");
+		int gegangBranchSize = facts.get("gegangBranchSize");
+		long qishaoGenListSize = facts.get("qishaoGenListSize");
+		double pailouPower = facts.get("pailou");
+		double xiangxinanInterface = facts.get("xiangxinanInterface");
 		
-		double spinningReserveOfUnits220OrAbove = units220OrAbove.stream()
-				.mapToDouble(gen -> gen.getPGenLimit().getMax() - gen.getGen().getReal()).filter(d -> d < 10).sum()
-				* 10;
-
-		if (jiangcanBranchList.size() == 2 && canliBranchList.size() == 2 && lifuBranchList.size() == 2
-				&& gegangBranchList.size() == 1) {
+		if (jiangcanBranchSize == 2 && canliBranchSize == 2 && lifuBranchSize == 2
+				&& gegangBranchSize == 1) {
 			System.out.println("状态 ：正常状态");
 			if (loadP <= 1300) {
 				if (powerOfQishao < 80) {
@@ -172,7 +168,7 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 				} else if (powerOfQishao < 450) {
 					setLimit(36, 9, 24, 0.2, 330);
 				}
-			} else if (gegangBranchList.size() == 0) {
+			} else if (gegangBranchSize == 0) {
 				System.out.println("状态 ：葛岗检修");
 				if (loadP <= 1300) {
 					if (powerOfQishao < 80) {
@@ -254,16 +250,15 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 					} else if (powerOfQishao < 300) {
 						setLimit(36, 9, 24, 0.15, 200);
 					}
-
 				}
 			}
 
-			else if (jiangcanBranchList.size() + canliBranchList.size() + lifuBranchList.size() < 6) {
-				if (jiangcanBranchList.size() < 2) {
+			else if (jiangcanBranchSize + canliBranchSize + lifuBranchSize < 6) {
+				if (jiangcanBranchSize < 2) {
 					System.out.println("状态 ：江孱线检修");
-				} else if (canliBranchList.size() < 2) {
+				} else if (canliBranchSize < 2) {
 					System.out.println("状态 ：孱澧线检修");
-				} else if (lifuBranchList.size() < 2) {
+				} else if (lifuBranchSize  < 2) {
 					System.out.println("状态 ：澧复线检修");
 				}
 				if (loadP <= 1300) {
@@ -348,26 +343,31 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 					} else if (powerOfQishao < 300) {
 						setLimit(36, 9, 24, 0.15, 200);
 					}
-				}
-				
+				}	
+			}
+		}else {
+			System.err.println("error status!");
+		}
+		if (jiangcanBranchSize == 2 && canliBranchSize == 2 && lifuBranchSize == 2 && gegangBranchSize == 1) {
+			if ((loadP <= 2200 && pailouPower < 40) || xiangxinanInterface < 160) {
+				this.unitsInLoadCenterSizeLimit -= 1;
 			}
 		}
-		System.out.println("负荷水平：" + loadP);
-		System.out.println("祁韶直流： " + powerOfQishao);
-		List<AclfGen> overLimitList = unitsInLoadCenter.stream().filter(gen -> ((gen.getPGenLimit().getMax() - gen.getGen().getReal())
-				/ gen.getPGenLimit().getMax()) < this.minSpinningReserveOfUnitsInLoadCentereLimit
-		).collect(Collectors.toList());
-		limitAction(unitsInProvince.size(), this.unitsInProvinceSizeLimit, "省内发电机组数");
-		limitAction(unitsInCentral.size(), this.unitsInCentralSizeLimit, "湘中发电机组数");
-		limitAction(unitsInLoadCenter.size(), this.unitsInLoadCenterSizeLimit, "负荷中心发电机组数");
-		limitAction(minSpinningReserveOfUnitsInLoadCentere, this.minSpinningReserveOfUnitsInLoadCentereLimit, "负荷中心机组最小旋转备用百分比");
-		overLimitList.forEach(gen -> {
-			System.err.println(gen.getName()
-					+ (gen.getPGenLimit().getMax() - gen.getGen().getReal()) / gen.getPGenLimit().getMax());
-		});
-		limitAction(spinningReserveOfUnits220OrAbove, this.spinningReserveOfUnits220OrAboveLimit, "220以上机组旋转备用");
+		this.unitsInLoadCenterSizeLimit -= qishaoGenListSize;
+		this.unitsInCentralSizeLimit -= qishaoGenListSize;
+		this.unitsInProvinceSizeLimit -= qishaoGenListSize;
+		System.out.println("负荷水平(万千瓦)：" + String.format("%.2f", loadP));
+		System.out.println("祁韶直流(万千瓦)： " + String.format("%.2f", powerOfQishao));
 		
+		limitAction(unitsInProvinceSize, this.unitsInProvinceSizeLimit, "省内发电机组数");
+		limitAction(unitsInCentralSize, this.unitsInCentralSizeLimit, "湘中发电机组数");
+		limitAction(unitsInLoadCenterSize, this.unitsInLoadCenterSizeLimit, "负荷中心发电机组数");
+//		limitAction(minSpinningReserveOfUnitsInLoadCentere, this.minSpinningReserveOfUnitsInLoadCentereLimit, "负荷中心机组最小旋转备用百分比");
 		
+		limitAction(spinningReserveOfUnits220OrAbove, this.spinningReserveOfUnits220OrAboveLimit, "220及以上机组旋转备用(万千瓦)");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = df.format(new Date());
+		System.out.println("[当前时间]"+date);
 	}
 	
 	private void setLimit(int unitsInProvinceSizeLimit, int unitsInCentralSizeLimit, int unitsInLoadCenterSizeLimit,
@@ -381,9 +381,9 @@ public class HNNewRuleDemo4 extends BaseCEPRule {
 	
 	private void limitAction(double status, double limit, String name) {
 		if (status < limit) {
-			System.err.println("[" + name + " : " + status + "]" + " Is over-limit,  current limit:" + limit);
+			System.err.println("[" + name + " : " + String.format("%.2f",status) + "]" + " Is over-limit,  current limit:" + limit);
 		} else {
-			System.out.println("[" + name + " : " + status + "]" + " In a safe state ,  current limit:" + limit);
+			System.out.println("[" + name + " : " + String.format("%.2f",status) + "]" + " In a safe state ,  current limit:" + limit);
 		}
 	}
 

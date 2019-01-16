@@ -33,7 +33,7 @@ import cn.sgepri.model.physical.PModelContainer;
 import cn.sgepri.model.physical.impl.PModelContainerHelper;
 
 public class HunanFactsCheckTest{
-
+	double p = 0;
 	@Test
 	public void test() throws IOException, RTModelException, InterpssException {
 		HashSet<String> nameSet = new HashSet<String>();
@@ -66,6 +66,7 @@ public class HunanFactsCheckTest{
 		List<AclfGen> genList3 = new ArrayList<AclfGen>();
 		List<AclfGen> genList4 = new ArrayList<AclfGen>();
 		List<AclfGen> genList5 = new ArrayList<AclfGen>();
+		List<AclfGen> genList6 = new ArrayList<AclfGen>();
 		
 		List<AclfLoad> loadList = new ArrayList<AclfLoad>();
 		List<AclfLoad> loadList2 = new ArrayList<AclfLoad>();
@@ -112,7 +113,12 @@ public class HunanFactsCheckTest{
 				genList5.addAll(bus.getContributeGenList().stream()
 						.collect(Collectors.toList()));
 			}
+			if (!bus.getId().contains("葛洲坝") && !bus.getId().contains("安福站") && !bus.getId().contains("江陵站")
+					&& !bus.getId().contains("孱陵站")) {
+				genList6.addAll(bus.getContributeGenList());
+			}
 		});
+		
 		List<AclfBranch> branchList1 = alcfNet.getBranchList().stream()
 				.filter(branch -> branch.getName().contains("江孱")).collect(Collectors.toList());
 		List<AclfBranch> branchList2 = alcfNet.getBranchList().stream()
@@ -153,9 +159,8 @@ public class HunanFactsCheckTest{
 		List<AclfGen> canliBranchList = (List<AclfGen>) facts.get("canliBranchList");
 		List<AclfGen> lifuBranchList = (List<AclfGen>) facts.get("lifuBranchList");
 		List<AclfGen> gegangBranchList = (List<AclfGen>) facts.get("gegangBranchList");
-		double loadP = loads.stream().mapToDouble(load -> load.getLoadCP().getReal()).sum()*10;
 		double powerOfQishao = qishaoLoads.stream().mapToDouble(load -> -load.getLoadCP().getReal()).sum()*10;
-		
+		double loadP = genList6.stream().mapToDouble(gen->gen.getGen().getReal()).sum();
 		double minSpinningReserveOfUnitsInLoadCentere = unitsInLoadCenter.stream()
 				.mapToDouble(
 						gen -> (gen.getPGenLimit().getMax() - gen.getGen().getReal()) / gen.getPGenLimit().getMax())
@@ -167,10 +172,31 @@ public class HunanFactsCheckTest{
 //			if((gen.getPGenLimit().getMax() - gen.getGen().getReal())<10)
 //			System.out.println(gen.getName()+(gen.getPGenLimit().getMax() - gen.getGen().getReal()));
 //		});
-		System.out.println(loadP);
-		System.out.println(powerOfQishao);
+		
+		System.out.println(powerOfQishao/0.963);
 		System.out.println(minSpinningReserveOfUnitsInLoadCentere);
 		System.out.println(spinningReserveOfUnits220OrAbove);
+//		units220OrAbove.forEach(gen->{
+//			System.out.println(gen.getName()+(gen.getPGenLimit().getMax() - gen.getGen().getReal())*10);
+//		});
+		
+		alcfNet.getBusList().forEach(bus -> {
+			bus.getContributeGenList().forEach(gen -> {
+				if (gen.getGen().getReal() > 0) {
+					p += gen.getGen().getReal()*10;
+				}
+			});
+		});
+		System.out.println(p);
+		p=0;
+		p -= BaseAclfNetworkModelHelper.GetBranch(seNet, "华中.孱澧Ⅰ线").powerTo2From().getReal();
+		p -= BaseAclfNetworkModelHelper.GetBranch(seNet, "华中.孱澧Ⅱ线").powerTo2From().getReal();
+		p -= BaseAclfNetworkModelHelper.GetBranch(seNet, "华中.葛岗线").powerTo2From().getReal();
+		System.out.println(p*10);
+		System.out.println(p*100+powerOfQishao*10);
+		loadP = loadP*100+p*100+powerOfQishao*10;
+		System.out.println(loadP);
+		System.out.println(genList6.size());
 	}
 
 	Predicate<AclfGen> acticvComsumer = gen -> gen.getGen().getReal() > 0.1;
