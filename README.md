@@ -1,1 +1,1 @@
-# DispathRule
+# Dispatching Rule
