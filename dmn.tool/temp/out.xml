@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
+  <decision id="Decision_T1" name="T1 RuleSet">
+    <decisionTable hitPolicy="FIRST" id="DTable_T1">
+      <input id="T1_input_1" label="Param1">
+        <inputExpression id="InExpression_T1_1" typeRef="double">
+          <text>T1_参数1</text>
+        </inputExpression>
+      </input>
+      <input id="T1_input_2" label="Param2">
+        <inputExpression id="InExpression_T1_2" typeRef="double">
+          <text>T1_参数2</text>
+        </inputExpression>
+      </input>
+      <output id="T1_output_1" label="OptState" name="T1_运行状态" typeRef="string"/>
+      <output id="T1_output_2" label="Limit1" name="T1_限额1" typeRef="double"/>
+      <rule id="Rule_T1_1">
+        <description>T1 Rule 1</description>
+        <inputEntry id="ExpreTests_rule_T1_1_1">
+          <text>&lt;=10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_1_2">
+          <text>&lt;=1.0</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_1_1">
+          <text>正常运行</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_1_2">
+          <text>200</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_2">
+        <description>T1 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T1_R2_1">
+          <text>&lt;=10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R2_2">
+          <text>&gt;1.0</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_rs_T1_R2_1">
+          <text>正常运行</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_rs_T1_R2_2">
+          <text>300</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_3">
+        <description>T1 Rule 3</description>
+        <inputEntry id="ExpreTests_rs_T1_R3_1">
+          <text>&gt;10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R3_2">
+          <text>&lt;=1.1</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_rs_T1_R3_1">
+          <text>单回运行</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_rs_T1_R3_2">
+          <text>400</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_4">
+        <description>T1 Rule 4</description>
+        <inputEntry id="ExpreTests_rs_T1_R4_1">
+          <text>&gt;10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R4_2">
+          <text>&gt;1.1</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_rs_T1_R4_1">
+          <text>单回运行</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_rs_T1_R4_2">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T2" name="T2 RuleSet">
+    <decisionTable hitPolicy="FIRST" id="DTable_T2">
+      <input id="input_rs_T2_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T2_1" typeRef="double">
+          <text>T2_参数1</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T2_1" label="Limit2" name="T2_限额2" typeRef="integer"/>
+      <rule id="Rule_T2_1">
+        <description>T2 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T2_R1_1">
+          <text>&lt;=100.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T2_R1_1">
+          <text>4</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T2_2">
+        <description>T2 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T2_R2_1">
+          <text>&gt;100.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T2_R2_1">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T3" name="T3 RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T2"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_T3">
+      <input id="input_rs_T3_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T3_1" typeRef="double">
+          <text>T3_参数1</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T3_2" label="Param2">
+        <inputExpression id="LiteralExpression_rs_T3_2" typeRef="double">
+          <text>T3_参数2</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T3_1" label="Limit2" name="T3_限额2" typeRef="integer"/>
+      <rule id="Rule_T3_1">
+        <description>T3 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T3_R1_1">
+          <text>&lt;=100.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R1_2">
+          <text>&lt;=5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T3_R1_1">
+          <text>T2_限额2-1</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T3_2">
+        <description>T3 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T3_R2_1">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R2_2">
+          <text/>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T3_R2_1">
+          <text>T2_限额2</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T4" name="T4 RuleSet">
+    <decisionTable hitPolicy="FIRST" id="DTable_T4">
+      <input id="input_rs_T4_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T4_1" typeRef="double">
+          <text>T4_参数1</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T4_2" label="Param2">
+        <inputExpression id="LiteralExpression_rs_T4_2" typeRef="double">
+          <text>T4_参数2</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T4_1" label="Limit3" name="T4_限额3" typeRef="double"/>
+      <rule id="Rule_T4_1">
+        <description>T4 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T4_R1_1">
+          <text>&lt;=10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R1_2">
+          <text>&lt;=1.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T4_R1_1">
+          <text>200</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_2">
+        <description>T4 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T4_R2_1">
+          <text>&lt;=10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R2_2">
+          <text>&gt;1.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T4_R2_1">
+          <text>300</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_3">
+        <description>T4 Rule 3</description>
+        <inputEntry id="ExpreTests_rs_T4_R3_1">
+          <text>&gt;10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R3_2">
+          <text>&lt;=1.1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T4_R3_1">
+          <text>400</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_4">
+        <description>T4 Rule 4</description>
+        <inputEntry id="ExpreTests_rs_T4_R4_1">
+          <text>&gt;10.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R4_2">
+          <text>&gt;1.1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T4_R4_1">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T5" name="T5 RuleSet">
+    <decisionTable hitPolicy="FIRST" id="DTable_T5">
+      <input id="input_rs_T5_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T5_1" typeRef="double">
+          <text>T5_参数1</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T5_2" label="Param2">
+        <inputExpression id="LiteralExpression_rs_T5_2" typeRef="double">
+          <text>T5_参数2</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T5_1" label="Limit3" name="T5_限额3" typeRef="double"/>
+      <rule id="Rule_T5_1">
+        <description>T5 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T5_R1_1">
+          <text>&lt;=15.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R1_2">
+          <text>&lt;=0.9</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T5_R1_1">
+          <text>250</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_2">
+        <description>T5 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T5_R2_1">
+          <text>&lt;=15.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R2_2">
+          <text>&gt;0.9</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T5_R2_1">
+          <text>300</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_3">
+        <description>T5 Rule 3</description>
+        <inputEntry id="ExpreTests_rs_T5_R3_1">
+          <text>&gt;15.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R3_2">
+          <text>&lt;=1.1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T5_R3_1">
+          <text>400</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_4">
+        <description>T5 Rule 4</description>
+        <inputEntry id="ExpreTests_rs_T5_R4_1">
+          <text>&gt;15.0</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R4_2">
+          <text>&gt;1.1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_T5_R4_1">
+          <text>550</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T6" name="T6 RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T4"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_T5"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_T6">
+      <input id="input_rs_T6_1" label="T4_Limit3">
+        <inputExpression id="LiteralExpression_rs_T6_1" typeRef="double">
+          <text>T4_限额3</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T6_2" label="T5_Limit3">
+        <inputExpression id="LiteralExpression_rs_T6_2" typeRef="double">
+          <text>T5_限额3</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T6_1" label="Limit3" name="T6_限额3" typeRef="double"/>
+      <rule id="Rule_T6_1">
+        <description>T6 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T6_R1_1">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T6_R1_2">
+          <text/>
+        </inputEntry>
+        <outputEntry expressionLanguage="juel" id="LiteralExpression_rs_T6_R1_1">
+          <text>T4_限额3 &gt; T5_限额3 ? T4_限额3 : T5_限额3</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_StabilityLimit" name="Decision StabilityLimit RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T1"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_T3"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_T6"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_Stab">
+      <input id="input_rs_SL_1" label="DateTime">
+        <inputExpression id="LiteralExpression_rs_SL_1" typeRef="date">
+          <text>当前时间</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_SL_2" label="DateTime">
+        <inputExpression id="LiteralExpression_rs_SL_2" typeRef="date">
+          <text>当前时间</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_SL_1" label="OptState" name="运行状态" typeRef="string"/>
+      <output id="output_rs_SL_2" label="Limit1" name="限额1" typeRef="double"/>
+      <output id="output_rs_SL_3" label="Limit2" name="限额2" typeRef="integer"/>
+      <output id="output_rs_SL_4" label="Limit3" name="限额3" typeRef="double"/>
+      <rule id="Rule_SL_1">
+        <description>SL Rule 1</description>
+        <inputEntry id="ExpreTests_rs_SL_R1_1">
+          <text>[date and time("2019-01-01T12:00:00")..date and time("2019-12-31T12:00:00")]</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_SL_R1_2">
+          <text>not([date and time("2019-02-04T12:00:00")..date and time("2019-02-10T12:00:00")])</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_SL_R1_1">
+          <text>T1_运行状态</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_rs_SL_R1_2">
+          <text>T1_限额1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_rs_SL_R1_3">
+          <text>T1_限额2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_rs_SL_R1_4">
+          <text>T1_限额3</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

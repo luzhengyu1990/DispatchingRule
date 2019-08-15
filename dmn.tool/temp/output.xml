@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
+  <decision id="testGenerated" name="generationtest">
+    <decisionTable hitPolicy="UNIQUE" id="decisionTable">
+      <input id="Input_1" label="Season">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>season</text>
+        </inputExpression>
+      </input>
+      <input id="Input_2" label="Number of guests">
+        <inputExpression id="InputExpression_2" typeRef="integer">
+          <text>guestCount</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Dish" name="dish" typeRef="string"/>
+      <rule id="Rule_1">
+        <inputEntry id="input_3">
+          <text>"Summer"</text>
+        </inputEntry>
+        <inputEntry id="input_4">
+          <text>&lt;4</text>
+        </inputEntry>
+        <outputEntry id="output_2">
+          <text>"Strawberries"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_3174c646-7ed6-4f77-a07d-72f12d2be292">
+        <inputEntry id="input_1">
+          <text>"Summer"</text>
+        </inputEntry>
+        <inputEntry id="input_2">
+          <text>&gt;=4</text>
+        </inputEntry>
+        <outputEntry id="output_1">
+          <text>"Icecream"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
