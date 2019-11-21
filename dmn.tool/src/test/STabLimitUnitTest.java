@@ -39,7 +39,7 @@ public class STabLimitUnitTest {
 		
 		VariableMap variables = Variables
 			      .putValue("当前时间", "2019-11-30T12:00:00")
-			      .putValue("T1_参数1", "9.0")       // T1.OptState "Õý³£ÔËÐÐ", T1.Limit1 200
+			      .putValue("T1_参数1", "9.0")       // T1.OptState "正常运行", T1.Limit1 200
 			      .putValue("T1_参数2", "1.0")
 			      .putValue("T2_参数1", "120")       // T2.Limit2 5
 			      .putValue("T3_参数1", "90.0")      // T3.Limit2 4
