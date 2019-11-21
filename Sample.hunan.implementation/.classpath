@@ -10,8 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hazelcast"/>
 	<classpathentry kind="lib" path="/platform.core/dist/platform.core.jar" sourcepath="/platform.core"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/platform.core/dist/sgepri.model.jar" sourcepath="/app.codegen"/>
-	<classpathentry kind="lib" path="/platform.core/dist/sgepri.plugin.jar"/>
 	<classpathentry kind="lib" path="/platform.core/dist/se.model.jar"/>
 	<classpathentry kind="lib" path="/ext-lib/lib/interpss/ieee.odm_pss.jar"/>
 	<classpathentry kind="lib" path="/ext-lib/lib/interpss/ipss_core.jar"/>
