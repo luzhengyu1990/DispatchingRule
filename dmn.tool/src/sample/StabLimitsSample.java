@@ -7,12 +7,12 @@ import org.camunda.bpm.model.dmn.instance.Input;
 import org.camunda.bpm.model.dmn.instance.InputData;
 import org.camunda.bpm.model.dmn.instance.Rule;
 
-import cn.sg.dmn.tool.DmnModelHelper;
+import cn.sg.dmn.tool.DmnXmlModelHelper;
 
 public class StabLimitsSample {
 
 	public static void main(String[] args) {
-	  DmnModelHelper dmnHelper = new DmnModelHelper();
+	  DmnXmlModelHelper dmnHelper = new DmnXmlModelHelper();
 	  
 	  /*
 	   * inputData section
