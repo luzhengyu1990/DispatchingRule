@@ -26,7 +26,7 @@ import org.camunda.bpm.model.xml.ModelValidationException;
  * @author Mike
  *
  */
-public class DmnModelHelper {
+public class DmnXmlModelHelper {
 	public static String TypeRef_String  = "string";
 	public static String TypeRef_Double  = "double";
 	public static String TypeRef_Integer = "integer";
@@ -42,7 +42,7 @@ public class DmnModelHelper {
 	/**
 	 * default constructor
 	 */
-	public DmnModelHelper() {
+	public DmnXmlModelHelper() {
 		this(DefId, DefName);
 	}
 	
@@ -52,7 +52,7 @@ public class DmnModelHelper {
 	 * @param defId
 	 * @param defName
 	 */
-	public DmnModelHelper(String defId, String defName) {
+	public DmnXmlModelHelper(String defId, String defName) {
 	    this.modelInstance = Dmn.createEmptyModel();
 	    
 	    this.definitions = modelInstance.newInstance(Definitions.class);
