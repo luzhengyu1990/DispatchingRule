@@ -38,7 +38,7 @@ public class DmnSample1 {
 	  
 	  Rule rule3 = dmnHelper.addRule("Rule_T1_3", "T1 Rule 3", "T1 Rule 3", dt1);
 	  dmnHelper.addInputEntry("ExpreTests_rs_T1_R3_1", "\"长阳铺主变停运\"", rule3);
-	  dmnHelper.addOutputEntry("OutputEntry_rs_T1_R3_1", "", rule3);
+	  dmnHelper.addOutputEntry("OutputEntry_rs_T1_R3_1", "null", rule3);
 	  dmnHelper.addOutputEntry("OutputEntry_rs_T1_R3_2", "950", rule3);
 	  
 	  /*
@@ -69,6 +69,53 @@ public class DmnSample1 {
 	  dmnHelper.addInputEntry("ExpreTests_rs_T2_R3_1", "\"长阳铺任一台主变停运\"", rule3);
 	  dmnHelper.addOutputEntry("LiteralExpression_rs_T2_R3_1", "600", rule3);
 	  dmnHelper.addOutputEntry("LiteralExpression_rs_T2_R3_2", "1000", rule3);
+	  
+	  
+	  /*
+	   * DTable Decision_T3
+	   */
+	  Decision d3 = dmnHelper.createDecision("Decision_T3", "T3 RuleSet");
+	  
+	  DecisionTable dt3 = dmnHelper.addDecisionTable("DTable_T3", HitPolicy.FIRST, d3);
+	  
+	  in1 = dmnHelper.addInput("input_rs_T3_1", "Param1", dt3);
+	  Input in2 = dmnHelper.addInput("input_rs_T3_2", "Param2", dt3);
+	  Input in3 = dmnHelper.addInput("input_rs_T3_3", "Param3", dt3);
+	  Input in4 = dmnHelper.addInput("input_rs_T3_4", "Param4", dt3);
+	  
+	  dmnHelper.addInputExpression("LiteralExpression_rs_T3_1", "string", "T2_参数1", in1);
+	  dmnHelper.addInputExpression("LiteralExpression_rs_T3_2", "double", "T3_长阳铺变下网", in2);
+	  dmnHelper.addInputExpression("LiteralExpression_rs_T3_3", "double", "T3_湍宝线送宝庆潮流", in3);
+	  dmnHelper.addInputExpression("LiteralExpression_rs_T3_4", "double", "T3_吉永线送永丰潮流", in4);
+
+	  dmnHelper.addOutput("output_rs_T3_1", "Psum5", "T3_限额1", "boolean", dt3);
+	  dmnHelper.addOutput("output_rs_T3_2", "Psum6", "T3_限额2", "boolean", dt3);
+	  
+	  rule1 = dmnHelper.addRule("Rule_T3_1", "T3 Rule 1", "T3 Rule 1", dt3);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R1_1", "\'正常方式\'", rule1);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R1_2", "", rule1);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R1_3", "", rule1);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R1_4", "", rule1);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_T3_R1_1", "T3_长阳铺变下网*0.1+T3_湍宝线送宝庆潮流<=260?true:false", rule1);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_T3_R1_2", "T3_长阳铺变下网 *0.07+T3_吉永线送永丰潮流<=260?true:false", rule1);
+
+	  rule2 = dmnHelper.addRule("Rule_T3_2", "T3 Rule 2", "T3 Rule 2", dt3);
+	  
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R2_1", "\'民丰任一台主变停运\'", rule2);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R2_2", "", rule2);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R2_3", "", rule2);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R2_4", "", rule2);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_T3_R2_1", "T3_长阳铺变下网*0.1 + T3_湍宝线送宝庆潮流<=260?true:false", rule2);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_T3_R2_2", "T3_长阳铺变下网 *0.07 + T3_吉永线送永丰潮流<=260?true:false", rule2);
+	  
+	  
+	  rule3 = dmnHelper.addRule("Rule_T3_3", "T3 Rule 3", "T3 Rule 3", dt3);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R3_1", "\'长阳铺任一台主变停运\'", rule3);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R3_2", "", rule3);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R3_3", "", rule3);
+	  dmnHelper.addInputEntry("ExpreTests_rs_T3_R3_4", "", rule3);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_T3_R3_1", "T3_长阳铺变下网*0.35 + T3_湍宝线送宝庆潮流<=260?true:false", rule3);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_T3_R3_2", "T3_长阳铺变下网 *0.23 + T3_吉永线送永丰潮流<=260?true:false", rule3);
 	 
 	  /*
 	   * DTable Decision_StabilityLimit
@@ -78,6 +125,7 @@ public class DmnSample1 {
 	  // informationRequirement section
 	  dmnHelper.addInfoRequirement(d1, dStab);
 	  dmnHelper.addInfoRequirement(d2, dStab);
+	  dmnHelper.addInfoRequirement(d3, dStab);
 	  
 	  DecisionTable dtStab = dmnHelper.addDecisionTable("DTable_Stab", HitPolicy.FIRST, dStab);
 
@@ -88,6 +136,8 @@ public class DmnSample1 {
 	  dmnHelper.addOutput("output_rs_SL_2", "Psum2", "民丰2台主变功率之和<", "double", dtStab);
 	  dmnHelper.addOutput("output_rs_SL_3", "Psum3", "长阳铺2台主变功率之和<", "double", dtStab);
 	  dmnHelper.addOutput("output_rs_SL_4", "Psum4", "长阳铺#2主变投运后民丰2台主变功率之和<", "double", dtStab);
+	  dmnHelper.addOutput("output_rs_SL_5", "Psum5", "限额1", "boolean", dtStab);
+	  dmnHelper.addOutput("output_rs_SL_6", "Psum6", "限额2", "boolean", dtStab);
 
 	  rule1 = dmnHelper.addRule("Rule_SL_1", "SL Rule 1", "SL Rule 1", dtStab);
 	  dmnHelper.addInputEntry("ExpreTests_rs_SL_R1_1", 
@@ -96,6 +146,8 @@ public class DmnSample1 {
 	  dmnHelper.addOutputEntry("LiteralExpression_rs_SL_R1_2", "T1_民丰2台主变功率之和", rule1);
 	  dmnHelper.addOutputEntry("LiteralExpression_rs_SL_R1_3", "T2_长阳铺2台主变功率之和", rule1);
 	  dmnHelper.addOutputEntry("LiteralExpression_rs_SL_R1_4", "T2_民丰2台主变功率之和", rule1);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_SL_R1_5", "T3_限额1", rule1);
+	  dmnHelper.addOutputEntry("LiteralExpression_rs_SL_R1_6", "T3_限额2", rule1);
 	  
 	  /*
 	   * 
