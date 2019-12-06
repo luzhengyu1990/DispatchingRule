@@ -27,7 +27,7 @@ public class DmnUnitTest1 {
 	  
 	@Before
 	public void parseDecision() throws Exception {
-		InputStream inputStream = new FileInputStream("temp/out1.xml");
+		InputStream inputStream = new FileInputStream("testdata/out1.xml");
 	    dmnEngine = dmnEngineRule.getDmnEngine();
 	    decisionSet = dmnEngine.parseDecisions(inputStream);
 	}
@@ -39,18 +39,21 @@ public class DmnUnitTest1 {
 		
 		VariableMap variables = Variables
 				.putValue("当前时间", "2019-11-30T12:00:00")
-				.putValue("T1_参数1", "正常方式")
-			    .putValue("T2_参数1", "正常方式")
-				.putValue("T3_长阳铺变下网", 20)
+				.putValue("T1_运行方式", "正常方式")
+				.putValue("T1_民丰长阳铺3台主变功率之和", 1400)
+				.putValue("T1_民丰2台主变功率之和", 1000)
+				.putValue("T2_运行方式", "正常方式")
+				.putValue("T2_长阳铺2台主变功率之和", 900)
+				.putValue("T2_民丰2台主变功率之和", 1000)
+				.putValue("T3_长阳铺变下网", 50)
 				.putValue("T3_湍宝线送宝庆潮流", 20)
-				.putValue("T3_吉永线送永丰潮流", 30);
-			     
+				.putValue("T3_吉永线送永丰潮流", 30);			     
 		
 		// evaluate decision
 		DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(ruleSet, variables);	
-		System.out.println("Test1 [民丰长阳铺3台主变功率之和<=1400.0, 民丰2台主变功率之和<=1000.0, 长阳铺2台主变功率之和<=900.0, 长阳铺#2主变投运后民丰2台主变功率之和<=1000.0,限额1=true, 限额2=true] => " + result.getSingleResult().getEntryMap());
+		System.out.println("Test1 [T1越界结果=正常运行, T5越界结果=正常运行] => " + result.getSingleResult().getEntryMap());
 		
-		assertTrue("", (boolean)result.getSingleResult().getEntry("限额1") == true);
+		assertTrue("", result.getSingleResult().getEntry("T5越界结果").toString().equals("正常运行"));
 	
 	}
 }
