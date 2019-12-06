@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
+  <decision id="Decision_T1" name="T1 RuleSet">
+    <decisionTable hitPolicy="FIRST" id="DTable_T1">
+      <input id="T1_input_1" label="Param1">
+        <inputExpression id="InExpression_T1_1" typeRef="string">
+          <text>T1_运行方式</text>
+        </inputExpression>
+      </input>
+      <input id="T1_input_2" label="Param2">
+        <inputExpression id="InExpression_T1_2" typeRef="double">
+          <text>T1_民丰长阳铺3台主变功率之和</text>
+        </inputExpression>
+      </input>
+      <input id="T1_input_3" label="Param3">
+        <inputExpression id="InExpression_T1_3" typeRef="double">
+          <text>T1_民丰2台主变功率之和</text>
+        </inputExpression>
+      </input>
+      <output id="T1_output_1" label="Psum1" name="T1_越界结果" typeRef="string"/>
+      <rule id="Rule_T1_1">
+        <description>T1 Rule 1</description>
+        <inputEntry id="ExpreTests_rule_T1_R1_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R1_2">
+          <text>&lt;=1400</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R1_3">
+          <text>&lt;=1000</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_R1_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_2">
+        <description>T1 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T1_R2_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R2_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R2_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_R2_1">
+          <text>'Pmax越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_3">
+        <description>T1 Rule 3</description>
+        <inputEntry id="ExpreTests_rule_T1_R3_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R3_2">
+          <text>&lt;=950</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R3_3">
+          <text>&lt;=500</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_R3_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_4">
+        <description>T1 Rule 4</description>
+        <inputEntry id="ExpreTests_rule_T1_R4_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R4_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R4_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_R4_1">
+          <text>'Pmax越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_5">
+        <description>T1 Rule 5</description>
+        <inputEntry id="ExpreTests_rule_T1_R5_1">
+          <text>'长阳铺主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R5_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T1_R5_3">
+          <text>&lt;=950</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_R5_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T1_6">
+        <description>T1 Rule 6</description>
+        <inputEntry id="ExpreTests_rs_T1_R6_1">
+          <text>'长阳铺主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R6_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T1_R6_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T1_R6_1">
+          <text>'Pmax越界告警'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T2" name="T2 RuleSet">
+    <decisionTable hitPolicy="FIRST" id="DTable_T2">
+      <input id="T2_input_1" label="Param1">
+        <inputExpression id="InExpression_T2_1" typeRef="string">
+          <text>T2_运行方式</text>
+        </inputExpression>
+      </input>
+      <input id="T2_input_2" label="Param2">
+        <inputExpression id="InExpression_T2_2" typeRef="double">
+          <text>T2_长阳铺2台主变功率之和</text>
+        </inputExpression>
+      </input>
+      <input id="T2_input_3" label="Param3">
+        <inputExpression id="InExpression_T2_3" typeRef="double">
+          <text>T2_民丰2台主变功率之和</text>
+        </inputExpression>
+      </input>
+      <output id="T2_output_1" label="Psum1" name="T2_越界结果" typeRef="string"/>
+      <rule id="Rule_T2_1">
+        <description>T2 Rule 1</description>
+        <inputEntry id="ExpreTests_rule_T2_R1_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R1_2">
+          <text>&lt;=900</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R1_3">
+          <text>&lt;=1000</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T2_R1_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T2_2">
+        <description>T2 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T2_R2_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T2_R2_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T2_R2_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T2_R2_1">
+          <text>'Pmax越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T2_3">
+        <description>T2 Rule 3</description>
+        <inputEntry id="ExpreTests_rule_T2_R3_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R3_2">
+          <text>&lt;=900</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R3_3">
+          <text>&lt;=500</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T2_R3_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T2_4">
+        <description>T2 Rule 4</description>
+        <inputEntry id="ExpreTests_rule_T2_R4_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R4_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R4_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T2_R4_1">
+          <text>'Pmax越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T2_5">
+        <description>T2 Rule 5</description>
+        <inputEntry id="ExpreTests_rule_T2_R5_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R5_2">
+          <text>&lt;=600</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rule_T2_R5_3">
+          <text>&lt;=1000</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T2_R5_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T2_6">
+        <description>T2 Rule 6</description>
+        <inputEntry id="ExpreTests_rs_T2_R6_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T2_R6_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T2_R6_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T2_R6_1">
+          <text>'Pmax越界告警'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T3" name="T3 RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T2"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_T3">
+      <input id="input_rs_T3_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T3_1" typeRef="string">
+          <text>T2_运行方式</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T3_2" label="Param2">
+        <inputExpression id="LiteralExpression_rs_T3_2" typeRef="double">
+          <text>T3_长阳铺变下网</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T3_3" label="Param3">
+        <inputExpression id="LiteralExpression_rs_T3_3" typeRef="double">
+          <text>T3_湍宝线送宝庆潮流</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T3_4" label="Param4">
+        <inputExpression id="LiteralExpression_rs_T3_4" typeRef="double">
+          <text>T3_吉永线送永丰潮流</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T3_1" label="Psum5" name="T3_限额1" typeRef="double"/>
+      <output id="output_rs_T3_2" label="Psum6" name="T3_限额2" typeRef="double"/>
+      <rule id="Rule_T3_1">
+        <description>T3 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T3_R1_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R1_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R1_3">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R1_4">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_rs_T3_R1_1">
+          <text>T3_长阳铺变下网*0.1+T3_湍宝线送宝庆潮流</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_rs_T3_R1_2">
+          <text>T3_长阳铺变下网*0.07+T3_吉永线送永丰潮流</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T3_2">
+        <description>T3 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T3_R2_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R2_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R2_3">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R2_4">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_rs_T3_R2_1">
+          <text>T3_长阳铺变下网*0.1+T3_湍宝线送宝庆潮流</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_rs_T3_R2_2">
+          <text>T3_长阳铺变下网 *0.07+T3_吉永线送永丰潮流</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T3_3">
+        <description>T3 Rule 3</description>
+        <inputEntry id="ExpreTests_rs_T3_R3_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R3_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R3_3">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T3_R3_4">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_rs_T3_R3_1">
+          <text>T3_长阳铺变下网*0.35+T3_湍宝线送宝庆潮流</text>
+        </outputEntry>
+        <outputEntry id="OutputEntry_rs_T3_R3_2">
+          <text>T3_长阳铺变下网 *0.23+T3_吉永线送永丰潮流</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T4" name="T4 RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T2"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_T3"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_T4">
+      <input id="input_rs_T4_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T4_1" typeRef="string">
+          <text>T2_运行方式</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T4_2" label="Param2">
+        <inputExpression id="LiteralExpression_rs_T4_2" typeRef="double">
+          <text>T3_限额1</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T4_3" label="Param3">
+        <inputExpression id="LiteralExpression_rs_T4_3" typeRef="double">
+          <text>T3_限额2</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T4_1" label="Param4" name="T4_越界结果" typeRef="string"/>
+      <rule id="Rule_T4_1">
+        <description>T4 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T4_R1_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R1_2">
+          <text>&lt;=260</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R1_3">
+          <text>&lt;=260</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T4_R1_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_2">
+        <description>T4 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T4_R2_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R2_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R2_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T4_R2_1">
+          <text>'越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_3">
+        <description>T4 Rule 3</description>
+        <inputEntry id="ExpreTests_rs_T4_R3_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R3_2">
+          <text>&lt;=260</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R3_3">
+          <text>&lt;=260</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T4_R3_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_4">
+        <description>T4 Rule 4</description>
+        <inputEntry id="ExpreTests_rs_T4_R4_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R4_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R4_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T4_R4_1">
+          <text>'越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_5">
+        <description>T4 Rule 5</description>
+        <inputEntry id="ExpreTests_rs_T4_R5_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R5_2">
+          <text>&lt;=260</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R5_3">
+          <text>&lt;=260</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T4_R5_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T4_6">
+        <description>T4 Rule 6</description>
+        <inputEntry id="ExpreTests_rs_T4_R6_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R6_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T4_R6_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T4_R6_1">
+          <text>'越界告警'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T5" name="T5 RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T2"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_T4"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_T5">
+      <input id="input_rs_T5_1" label="Param1">
+        <inputExpression id="LiteralExpression_rs_T5_1" typeRef="string">
+          <text>T2_运行方式</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T5_2" label="Param2">
+        <inputExpression id="LiteralExpression_rs_T5_2" typeRef="string">
+          <text>T2_越界结果</text>
+        </inputExpression>
+      </input>
+      <input id="input_rs_T5_3" label="Param3">
+        <inputExpression id="LiteralExpression_rs_T5_3" typeRef="string">
+          <text>T4_越界结果</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_T5_1" label="Param4" name="T5_越界结果" typeRef="string"/>
+      <rule id="Rule_T5_1">
+        <description>T5 Rule 1</description>
+        <inputEntry id="ExpreTests_rs_T5_R1_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R1_2">
+          <text>'正常运行'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R1_3">
+          <text>'正常运行'</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T5_R1_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_2">
+        <description>T5 Rule 2</description>
+        <inputEntry id="ExpreTests_rs_T5_R2_1">
+          <text>'正常方式'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R2_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R2_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T5_R2_1">
+          <text>'越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_3">
+        <description>T5 Rule 3</description>
+        <inputEntry id="ExpreTests_rs_T5_R3_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R3_2">
+          <text>'正常运行'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R3_3">
+          <text>'正常运行'</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T5_R3_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_4">
+        <description>T5 Rule 4</description>
+        <inputEntry id="ExpreTests_rs_T5_R4_1">
+          <text>'民丰任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R4_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R4_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T5_R4_1">
+          <text>'越界告警'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_5">
+        <description>T5 Rule 5</description>
+        <inputEntry id="ExpreTests_rs_T5_R5_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R5_2">
+          <text>'正常运行'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R5_3">
+          <text>'正常运行'</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T5_R5_1">
+          <text>'正常运行'</text>
+        </outputEntry>
+      </rule>
+      <rule id="Rule_T5_6">
+        <description>T5 Rule 6</description>
+        <inputEntry id="ExpreTests_rs_T5_R6_1">
+          <text>'长阳铺任一台主变停运'</text>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R6_2">
+          <text/>
+        </inputEntry>
+        <inputEntry id="ExpreTests_rs_T5_R6_3">
+          <text/>
+        </inputEntry>
+        <outputEntry id="OutputEntry_Rule_T5_R6_1">
+          <text>'越界告警'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_TransformerAdjust" name="Decision TransformerAdjust RuleSet">
+    <informationRequirement>
+      <requiredDecision href="#Decision_T1"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_T5"/>
+    </informationRequirement>
+    <decisionTable hitPolicy="FIRST" id="DTable_Stab">
+      <input id="input_rs_SL_1" label="DateTime">
+        <inputExpression id="LiteralExpression_rs_SL_1" typeRef="date">
+          <text>当前时间</text>
+        </inputExpression>
+      </input>
+      <output id="output_rs_SL_1" label="Psum1" name="T1越界结果" typeRef="string"/>
+      <output id="output_rs_SL_2" label="Psum2" name="T5越界结果" typeRef="string"/>
+      <rule id="Rule_SL_1">
+        <description>SL Rule 1</description>
+        <inputEntry id="ExpreTests_rs_SL_R1_1">
+          <text>[date and time("2019-01-01T12:00:00")..date and time("2019-12-31T12:00:00")]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_rs_SL_R1_1">
+          <text>T1_越界结果</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_rs_SL_R1_2">
+          <text>T5_越界结果</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
