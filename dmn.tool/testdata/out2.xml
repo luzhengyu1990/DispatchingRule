@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<definitions xmlns:ns0="http://camunda.org/schema/1.0/dmn" id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
+<definitions id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd">
   <decision id="Decision_T1" name="T1 RuleSet">
     <decisionTable hitPolicy="FIRST" id="DTable_T1">
       <input id="T1_参数1" label="运行方式">
@@ -22,8 +22,8 @@
           <text>T1_长阳铺主变功率</text>
         </inputExpression>
       </input>
-      <input id="T1_Input1" label="越界判断" ns0:inputVariable="T1_民丰主变1功率 + T1_民丰主变2功率 + T1_长阳铺主变功率">
-        <inputExpression id="InExpression_T1_5" typeRef="double">
+      <input id="T1_Input1" label="越界判断">
+        <inputExpression id="InExpression_T1_5" typeRef="boolean">
           <text>T1_越界判断</text>
         </inputExpression>
       </input>
@@ -43,7 +43,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T1_R1_5">
-          <text>&gt;1400</text>
+          <text>T1_民丰主变1功率 + T1_民丰主变2功率 + T1_长阳铺主变功率&gt;1400</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T1_R1_1">
           <text>'民丰、长阳铺3台主变功率之和越界'</text>
@@ -64,7 +64,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T1_R2_5">
-          <text>&gt;1000</text>
+          <text>T1_民丰主变1功率 + T1_民丰主变2功率&gt;1000</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T1_R2_1">
           <text>'民丰2台主变功率之和越界'</text>
@@ -85,7 +85,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T1_R3_5">
-          <text>&gt;950</text>
+          <text>T1_民丰主变1功率 + T1_民丰主变2功率 + T1_长阳铺主变功率&gt;950</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T1_R3_1">
           <text>'民丰、长阳铺3台主变功率之和越界'</text>
@@ -106,7 +106,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T1_R4_5">
-          <text>&gt;500</text>
+          <text>T1_民丰主变1功率 + T1_民丰主变2功率&gt;500</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T1_R4_1">
           <text>'民丰2台主变功率之和越界'</text>
@@ -127,7 +127,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T1_R5_5">
-          <text>&gt;950</text>
+          <text>T1_民丰主变1功率 + T1_民丰主变2功率&gt;950</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T1_R5_1">
           <text>'民丰2台主变功率之和越界'</text>
@@ -198,8 +198,8 @@
           <text>T2_吉永线送永丰潮流</text>
         </inputExpression>
       </input>
-      <input id="T2_Input1" label="越界判断" ns0:inputVariable="">
-        <inputExpression id="InExpression_T2_9" typeRef="double">
+      <input id="T2_Input1" label="越界判断">
+        <inputExpression id="InExpression_T2_9" typeRef="boolean">
           <text>T2_越界判断</text>
         </inputExpression>
       </input>
@@ -231,7 +231,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R1_9">
-          <text>&gt;1000</text>
+          <text>T2_民丰主变1功率 + T2_民丰主变2功率&gt;1000</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R1_1">
           <text>'民丰2台主变功率之和越界'</text>
@@ -264,7 +264,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R2_9">
-          <text>&gt;900</text>
+          <text>T2_长阳铺主变1功率 + T2_长阳铺主变2功率&gt;900</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R2_1">
           <text>'长阳铺2台主变功率之和越界'</text>
@@ -297,7 +297,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R3_9">
-          <text>&gt;260</text>
+          <text>T2_长阳铺变下网*0.1 + T2_湍宝线送宝庆潮流&gt;260</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R3_1">
           <text>'长阳铺变下网（上网）的10%+湍宝线送宝庆（湍江）潮流功率之和越界'</text>
@@ -330,7 +330,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R4_9">
-          <text>&gt;260</text>
+          <text>T2_长阳铺变下网*0.07 + T2_吉永线送永丰潮流&gt;260</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R4_1">
           <text>'长阳铺变下网（上网）的7%+吉永线送永丰（吉星）潮流功率之和越界'</text>
@@ -363,7 +363,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R5_9">
-          <text>&gt;500</text>
+          <text>T2_民丰主变1功率 + T2_民丰主变2功率&gt;500</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R5_1">
           <text>'民丰2台主变功率之和越界'</text>
@@ -396,7 +396,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R6_9">
-          <text>&gt;900</text>
+          <text>T2_长阳铺主变1功率 + T2_长阳铺主变2功率&gt;900</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R6_1">
           <text>'长阳铺2台主变功率之和越界'</text>
@@ -429,7 +429,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R7_9">
-          <text>&gt;260</text>
+          <text>T2_长阳铺变下网*0.1 + T2_湍宝线送宝庆潮流&gt;260</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R7_1">
           <text>'长阳铺变下网（上网）的10%+湍宝线送宝庆（湍江）潮流功率之和越界'</text>
@@ -462,7 +462,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R8_9">
-          <text>&gt;260</text>
+          <text>T2_长阳铺变下网*0.07 + T2_吉永线送永丰潮流&gt;260</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R8_1">
           <text>'长阳铺变下网（上网）的7%+吉永线送永丰（吉星）潮流功率之和越界'</text>
@@ -495,7 +495,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R9_9">
-          <text>&gt;1000</text>
+          <text>T2_民丰主变1功率 + T2_民丰主变2功率&gt;1000</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R9_1">
           <text>'民丰2台主变功率之和越界'</text>
@@ -528,7 +528,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R10_9">
-          <text>&gt;600</text>
+          <text>T2_长阳铺主变1功率 + T2_长阳铺主变2功率&gt;600</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R10_1">
           <text>'长阳铺2台主变功率之和越界'</text>
@@ -561,7 +561,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R11_9">
-          <text>&gt;260</text>
+          <text>T2_长阳铺变下网*0.35 + T2_湍宝线送宝庆潮流&gt;260</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R11_1">
           <text>'长阳铺变下网（上网）的35%+湍宝线送宝庆（湍江）潮流功率之和越界'</text>
@@ -594,7 +594,7 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R12_9">
-          <text>&gt;260</text>
+          <text>T2_长阳铺变下网*0.23 + T2_吉永线送永丰潮流&gt;260</text>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R12_1">
           <text>'长阳铺变下网（上网）的23%+吉永线送永丰（吉星）潮流功率之和越界'</text>
@@ -603,7 +603,7 @@
       <rule id="Rule_T2_13">
         <description>T2 Rule 13</description>
         <inputEntry id="ExpreTests_Rule_T2_R13_1">
-          <text>'正常方式'</text>
+          <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R13_2">
           <text/>
@@ -627,372 +627,9 @@
           <text/>
         </inputEntry>
         <inputEntry id="ExpreTests_Rule_T2_R13_9">
-          <text>&lt;=1000</text>
+          <text/>
         </inputEntry>
         <outputEntry id="OutputEntry_Rule_T2_R13_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_14">
-        <description>T2 Rule 14</description>
-        <inputEntry id="ExpreTests_Rule_T2_R14_1">
-          <text>'正常方式'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R14_9">
-          <text>&lt;=900</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R14_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_15">
-        <description>T2 Rule 15</description>
-        <inputEntry id="ExpreTests_Rule_T2_R15_1">
-          <text>'正常方式'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R15_9">
-          <text>&lt;=260</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R15_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_16">
-        <description>T2 Rule 16</description>
-        <inputEntry id="ExpreTests_Rule_T2_R16_1">
-          <text>'正常方式'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R16_9">
-          <text>&lt;=260</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R16_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_17">
-        <description>T2 Rule 17</description>
-        <inputEntry id="ExpreTests_Rule_T2_R17_1">
-          <text>'民丰任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R17_9">
-          <text>&lt;=500</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R17_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_18">
-        <description>T2 Rule 18</description>
-        <inputEntry id="ExpreTests_Rule_T2_R18_1">
-          <text>'民丰任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R18_9">
-          <text>&lt;=900</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R18_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_19">
-        <description>T2 Rule 19</description>
-        <inputEntry id="ExpreTests_Rule_T2_R19_1">
-          <text>'民丰任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R19_9">
-          <text>&lt;=260</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R19_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_20">
-        <description>T2 Rule 20</description>
-        <inputEntry id="ExpreTests_Rule_T2_R20_1">
-          <text>'民丰任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R20_9">
-          <text>&lt;=260</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R20_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_21">
-        <description>T2 Rule 21</description>
-        <inputEntry id="ExpreTests_Rule_T2_R21_1">
-          <text>'长阳铺任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R21_9">
-          <text>&lt;=1000</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R21_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_22">
-        <description>T2 Rule 22</description>
-        <inputEntry id="ExpreTests_Rule_T2_R22_1">
-          <text>'长阳铺任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R22_9">
-          <text>&lt;=600</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R22_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_23">
-        <description>T2 Rule 23</description>
-        <inputEntry id="ExpreTests_Rule_T2_R23_1">
-          <text>'长阳铺任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R23_9">
-          <text>&lt;=260</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R23_1">
-          <text>'正常运行'</text>
-        </outputEntry>
-      </rule>
-      <rule id="Rule_T2_24">
-        <description>T2 Rule 24</description>
-        <inputEntry id="ExpreTests_Rule_T2_R24_1">
-          <text>'长阳铺任一台主变停运'</text>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_2">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_3">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_4">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_5">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_6">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_7">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_8">
-          <text/>
-        </inputEntry>
-        <inputEntry id="ExpreTests_Rule_T2_R24_9">
-          <text>&lt;=260</text>
-        </inputEntry>
-        <outputEntry id="OutputEntry_Rule_T2_R24_1">
           <text>'正常运行'</text>
         </outputEntry>
       </rule>
